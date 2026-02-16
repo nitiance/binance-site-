@@ -1,5 +1,9 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useMemo, useState } from "react";
 import { Mail, MessageCircle } from "lucide-react";
+import TurnstileWidget from "@/components/TurnstileWidget";
+import { getAttributionContext } from "@/lib/attribution";
+import { trackEvent } from "@/lib/analytics";
+import { submitLead } from "@/lib/leads";
 
 type ContactFormState = {
   name: string;
@@ -18,10 +22,15 @@ const defaultState: ContactFormState = {
 const Contact = () => {
   const [formState, setFormState] = useState<ContactFormState>(defaultState);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [honeypot, setHoneypot] = useState("");
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY as string | undefined;
+  const requiresTurnstile = Boolean(turnstileSiteKey);
 
+  const fallbackMailto = useMemo(() => {
     const body = [
       `Name: ${formState.name}`,
       `Email: ${formState.email}`,
@@ -31,14 +40,54 @@ const Contact = () => {
       formState.message,
     ].join("\n");
 
-    const mailtoUrl = `mailto:nitiance@gmail.com?subject=${encodeURIComponent(
+    return `mailto:nitiance@gmail.com?subject=${encodeURIComponent(
       "Client Contact",
     )}&body=${encodeURIComponent(body)}`;
+  }, [formState]);
 
-    setSubmitted(true);
-    window.setTimeout(() => {
-      window.location.href = mailtoUrl;
-    }, 120);
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (requiresTurnstile && !turnstileToken) {
+      setSubmitError("Complete the spam protection check before submitting.");
+      return;
+    }
+
+    setSubmitting(true);
+    setSubmitError("");
+
+    const attribution = getAttributionContext();
+    const result = await submitLead({
+      type: "contact",
+      name: formState.name,
+      businessName: formState.businessName,
+      email: formState.email,
+      message: formState.message,
+      pageUrl: window.location.href,
+      referrer: document.referrer || null,
+      attribution,
+      turnstileToken,
+      honeypot,
+    });
+
+    if (result.ok) {
+      setSubmitted(true);
+      trackEvent("contact_lead_submitted", {
+        delivered: Boolean(result.delivered),
+        channel: attribution.firstTouch?.channel ?? "direct",
+      });
+    } else {
+      trackEvent("contact_lead_fallback_email", {
+        reason: result.error ?? "unknown",
+      });
+      setSubmitError("Automated delivery failed, opening email fallback.");
+      setSubmitted(true);
+      window.setTimeout(() => {
+        window.location.href = fallbackMailto;
+      }, 120);
+    }
+
+    setSubmitting(false);
   };
 
   return (
@@ -85,7 +134,10 @@ const Contact = () => {
             </p>
           </div>
 
-          <form onSubmit={onSubmit} className="rounded-xl border border-[#D8CEC2] bg-white/80 p-6 md:p-8 shadow-[0_12px_30px_rgba(11,31,59,0.08)] space-y-5">
+          <form
+            onSubmit={onSubmit}
+            className="rounded-xl border border-[#D8CEC2] bg-white/80 p-6 md:p-8 shadow-[0_12px_30px_rgba(11,31,59,0.08)] space-y-5"
+          >
             <div>
               <label htmlFor="contact-name" className="block text-xs uppercase tracking-wide text-[#2B3440]/70 mb-2">
                 Name
@@ -121,7 +173,9 @@ const Contact = () => {
                 id="contact-business"
                 required
                 value={formState.businessName}
-                onChange={(event) => setFormState((prev) => ({ ...prev, businessName: event.target.value }))}
+                onChange={(event) =>
+                  setFormState((prev) => ({ ...prev, businessName: event.target.value }))
+                }
                 className="w-full rounded-lg border border-[#CFC3B5] bg-white px-3 py-2 text-sm text-[#0B0F14] focus:outline-none focus:ring-2 focus:ring-[#0B1F3B]"
               />
             </div>
@@ -140,13 +194,32 @@ const Contact = () => {
               />
             </div>
 
+            <div className="hidden" aria-hidden="true">
+              <label htmlFor="contact-company-website">Company website</label>
+              <input
+                id="contact-company-website"
+                tabIndex={-1}
+                autoComplete="off"
+                value={honeypot}
+                onChange={(event) => setHoneypot(event.target.value)}
+              />
+            </div>
+
+            <TurnstileWidget
+              siteKey={turnstileSiteKey}
+              onTokenChange={setTurnstileToken}
+              theme="light"
+            />
+
             <button
               type="submit"
-              className="w-full rounded-lg bg-[#0B1F3B] text-[#F7F3EE] text-sm font-medium px-4 py-3 hover:bg-[#0B1F3B]/90 transition-colors"
+              disabled={submitting || (requiresTurnstile && !turnstileToken)}
+              className="w-full rounded-lg bg-[#0B1F3B] disabled:opacity-60 disabled:cursor-not-allowed text-[#F7F3EE] text-sm font-medium px-4 py-3 hover:bg-[#0B1F3B]/90 transition-colors"
             >
-              Send
+              {submitting ? "Sending..." : "Send"}
             </button>
 
+            {submitError && <p className="text-xs text-[#3B0D0D]">{submitError}</p>}
             {submitted && (
               <p className="text-xs text-[#0F2A1D] font-medium">Sent. We'll reply shortly.</p>
             )}
