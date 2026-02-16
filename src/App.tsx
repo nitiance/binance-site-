@@ -12,6 +12,9 @@ const Portfolio = lazy(() => import("./pages/Portfolio"));
 const Labs = lazy(() => import("./pages/Labs"));
 const Community = lazy(() => import("./pages/Community"));
 const Media = lazy(() => import("./pages/Media"));
+const Contact = lazy(() => import("./pages/Contact"));
+const RequestSystem = lazy(() => import("./pages/RequestSystem"));
+const SystemDetail = lazy(() => import("./pages/SystemDetail"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const POSDemoPage = lazy(() => import("./pages/POSDemoPage"));
 
@@ -43,6 +46,9 @@ const App = () => (
                     <Route path="/labs" element={<Labs />} />
                     <Route path="/community" element={<Community />} />
                     <Route path="/media" element={<Media />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/request-system" element={<RequestSystem />} />
+                    <Route path="/systems/:systemId" element={<SystemDetail />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </Layout>

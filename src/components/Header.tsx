@@ -5,6 +5,9 @@ import { motion, AnimatePresence } from "framer-motion";
 const navItems = [
   { label: "About", path: "/about" },
   { label: "Portfolio", path: "/portfolio" },
+  { label: "Systems", path: "/systems/pos" },
+  { label: "Request", path: "/request-system" },
+  { label: "Contact", path: "/contact" },
   { label: "Labs", path: "/labs" },
   { label: "Community", path: "/community" },
   { label: "Media", path: "/media" },
@@ -13,6 +16,8 @@ const navItems = [
 const Header = () => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const isActivePath = (path: string) =>
+    location.pathname === path || (path === "/systems/pos" && location.pathname.startsWith("/systems/"));
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-white/5">
@@ -28,7 +33,7 @@ const Header = () => {
               key={item.path}
               to={item.path}
               className={`text-sm tracking-tight transition-colors ${
-                location.pathname === item.path
+                isActivePath(item.path)
                   ? "text-white"
                   : "text-white/50 hover:text-white"
               }`}
@@ -70,7 +75,7 @@ const Header = () => {
                     to={item.path}
                     onClick={() => setMenuOpen(false)}
                     className={`block py-4 text-2xl font-bold tracking-tight border-b border-white/10 ${
-                      location.pathname === item.path
+                      isActivePath(item.path)
                         ? "text-white"
                         : "text-white/50"
                     }`}

@@ -2,6 +2,8 @@ import ScrollReveal from "@/components/animations/ScrollReveal";
 import GradientBanner from "@/components/GradientBanner";
 import { Link } from "react-router-dom";
 import { Monitor, Smartphone, ShoppingCart, Pill, Shirt, Wrench, Palette } from "lucide-react";
+import SystemCardGrid from "@/components/systems/SystemCardGrid";
+import { systemCards } from "@/config/systems";
 
 const projects = [
   {
@@ -52,24 +54,6 @@ const industryOptions = [
   { icon: Monitor, name: "Electronics", description: "Tech shops, repairs, computer stores" },
 ];
 
-const systemScreenshots = [
-  {
-    title: "POS Terminal",
-    description: "Fast checkout with barcode scanning",
-    gradient: "from-blue-600 to-indigo-700",
-  },
-  {
-    title: "Inventory Dashboard",
-    description: "Real-time stock tracking & alerts",
-    gradient: "from-emerald-600 to-teal-700",
-  },
-  {
-    title: "Sales Analytics",
-    description: "Profit analysis & reporting",
-    gradient: "from-orange-500 to-red-600",
-  },
-];
-
 const Portfolio = () => {
   return (
     <div>
@@ -115,29 +99,17 @@ const Portfolio = () => {
             </ScrollReveal>
           ))}
 
-          {/* System Screenshots */}
+          {/* System Widgets */}
           <div className="mt-12">
             <ScrollReveal>
               <p className="text-xs tracking-tight uppercase mb-6 opacity-50">
-                System Preview
+                System Directory
               </p>
             </ScrollReveal>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {systemScreenshots.map((screen, i) => (
-                <ScrollReveal key={screen.title} delay={0.1 * i}>
-                  <div className="group relative overflow-hidden rounded-xl aspect-[4/3]">
-                    <div className={`absolute inset-0 bg-gradient-to-br ${screen.gradient} opacity-90`} />
-                    <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
-                      <Monitor className="w-10 h-10 text-white/80 mb-3" />
-                      <p className="text-white font-semibold text-sm">{screen.title}</p>
-                      <p className="text-white/60 text-xs mt-1">{screen.description}</p>
-                    </div>
-                    <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </div>
-                </ScrollReveal>
-              ))}
-            </div>
+
+            <ScrollReveal delay={0.05}>
+              <SystemCardGrid cards={systemCards} />
+            </ScrollReveal>
           </div>
 
           {/* Industry Customization */}
@@ -153,7 +125,7 @@ const Portfolio = () => {
                 Built for your industry
               </h3>
               <p className="text-sm text-white/60 max-w-xl mb-8">
-                The entire system can be customized to your preferences — industry-specific workflows, 
+                The entire system can be customized to your preferences - industry-specific workflows,
                 custom categories, branded colors, and tailored reporting. One system, infinite possibilities.
               </p>
             </ScrollReveal>
@@ -243,24 +215,24 @@ const Portfolio = () => {
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
               <h2 className="text-2xl md:text-3xl font-bold tracking-tighter leading-tight">
-                I build high-end websites
+                I build apps and business systems.
                 <br />
-                for selected clients.
+                Web work is only for selected clients.
               </h2>
             </ScrollReveal>
             <ScrollReveal delay={0.2}>
               <p className="mt-6 text-sm opacity-60 leading-relaxed max-w-[480px]">
-                Minimalist design. Clean code. No templates. If you value craft over speed, let's talk.
+                If you need POS, inventory, analytics, or custom workflows, send your requirements.
               </p>
             </ScrollReveal>
             <ScrollReveal delay={0.3}>
               <div className="mt-8">
-                <a
-                  href="mailto:hello@binancexi.com"
+                <Link
+                  to="/request-system"
                   className="text-sm font-medium border-b border-white/50 pb-0.5 hover:border-white transition-colors"
                 >
-                  Inquire about a project →
-                </a>
+                  Request a system →
+                </Link>
               </div>
             </ScrollReveal>
           </div>

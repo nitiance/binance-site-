@@ -39,6 +39,17 @@ const Footer = () => {
               <Link to="/portfolio" className="hover:text-white transition-colors">
                 Portfolio
               </Link>
+              <Link to="/systems/pos" className="hover:text-white transition-colors">
+                Systems
+              </Link>
+            </div>
+            <div className="flex flex-col gap-3">
+              <Link to="/request-system" className="hover:text-white transition-colors">
+                Request System
+              </Link>
+              <Link to="/contact" className="hover:text-white transition-colors">
+                Contact
+              </Link>
               <Link to="/labs" className="hover:text-white transition-colors">
                 Labs
               </Link>

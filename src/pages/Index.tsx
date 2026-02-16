@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import GradientBanner from "@/components/GradientBanner";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import TextReveal from "@/components/animations/TextReveal";
+import SystemCardGrid from "@/components/systems/SystemCardGrid";
+import { systemCards } from "@/config/systems";
 
 const divisions = [
   {
@@ -119,6 +121,25 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Systems Divider + Widgets */}
+      <section className="bg-[#F7F3EE] border-y border-[#D8CEC2]">
+        <div className="max-w-[1200px] mx-auto px-6 py-20 md:py-24">
+          <ScrollReveal>
+            <div className="mb-8 md:mb-10">
+              <p className="text-xs uppercase tracking-tight text-[#2B3440]/60 mb-3">
+                Systems
+              </p>
+              <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-[#0B0F14]">
+                Built to run real businesses.
+              </h2>
+            </div>
+          </ScrollReveal>
+          <ScrollReveal delay={0.05}>
+            <SystemCardGrid cards={systemCards} />
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* Collaboration - White */}
       <section className="bg-background border-t border-border">
         <div className="max-w-[1200px] mx-auto px-6 py-24 md:py-32">
@@ -136,20 +157,21 @@ const Index = () => {
             <ScrollReveal delay={0.15}>
               <div className="space-y-6 text-sm text-muted-foreground leading-relaxed">
                 <p>
-                  I review proposals for collaboration, partnerships, and selected
-                  client work. If you have something meaningful to build, reach out.
+                  I build apps and business systems (POS, inventory, analytics). Web work is only for selected clients.
                 </p>
-                <p>
-                  I also design and build minimalist, high-end websites for clients
-                  who value craft over noise.
-                </p>
-                <div className="pt-4">
-                  <a
-                    href="mailto:hello@binancexi.com"
+                <div className="pt-2 flex flex-wrap gap-6">
+                  <Link
+                    to="/contact"
                     className="text-sm font-medium text-foreground border-b border-foreground pb-0.5 hover:opacity-70 transition-opacity"
                   >
                     Get in touch
-                  </a>
+                  </Link>
+                  <Link
+                    to="/request-system"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    Request a system
+                  </Link>
                 </div>
               </div>
             </ScrollReveal>
