@@ -57,7 +57,7 @@ const GradientBanner = ({
         {showLogo && !title && (
           <>
             <motion.h1 
-              className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter gradient-text select-none"
+              className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-serif font-bold tracking-tighter gradient-text select-none"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
@@ -84,7 +84,7 @@ const GradientBanner = ({
               {subtitle}
             </motion.p>
             <motion.h1 
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter leading-[1.1] text-white max-w-[800px]"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold tracking-tighter leading-[1.1] text-white max-w-[800px]"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}

@@ -13,7 +13,7 @@ const SystemDetail = () => {
       <section className="bg-[#0B0F14] text-[#F7F3EE] min-h-[70vh]">
         <div className="max-w-[1200px] mx-auto px-6 py-24">
           <p className="text-xs uppercase tracking-wide text-[#F7F3EE]/50 mb-4">Systems</p>
-          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">System not found</h1>
+          <h1 className="text-3xl md:text-4xl font-serif font-semibold tracking-tight">System not found</h1>
           <p className="mt-4 text-sm text-[#F7F3EE]/70 max-w-md">
             This page is unavailable. Use the systems directory to open a valid system page.
           </p>
@@ -36,7 +36,7 @@ const SystemDetail = () => {
         <div className="max-w-[1200px] mx-auto px-6 py-20 md:py-24">
           <ScrollReveal>
             <p className="text-xs uppercase tracking-wide text-[#F7F3EE]/50 mb-4">System</p>
-            <h1 className="text-3xl md:text-5xl font-semibold tracking-tight">{system.title}</h1>
+            <h1 className="text-3xl md:text-5xl font-serif font-semibold tracking-tight">{system.title}</h1>
             <p className="mt-5 text-sm md:text-base text-[#F7F3EE]/75 max-w-2xl leading-relaxed">
               {system.intro}
             </p>

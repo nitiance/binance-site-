@@ -1,51 +1,50 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 5%;
+    /* Old-money core palette */
+    --background: 33 36% 95%; /* #F7F3EE */
+    --foreground: 213 29% 6%; /* #0B0F14 */
 
-    --card: 0 0% 98%;
-    --card-foreground: 0 0% 5%;
+    --card: 33 36% 98%;
+    --card-foreground: 213 29% 6%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 5%;
+    --popover: 33 36% 98%;
+    --popover-foreground: 213 29% 6%;
 
-    --primary: 0 0% 5%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 215 69% 14%; /* #0B1F3B */
+    --primary-foreground: 33 36% 95%;
 
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 5%;
+    --secondary: 33 22% 90%;
+    --secondary-foreground: 213 29% 6%;
 
-    --muted: 0 0% 94%;
-    --muted-foreground: 0 0% 45%;
+    --muted: 33 22% 92%;
+    --muted-foreground: 214 20% 35%;
 
-    --accent: 0 0% 96%;
-    --accent-foreground: 0 0% 5%;
+    --accent: 33 22% 88%;
+    --accent-foreground: 213 29% 6%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 0 0% 5%;
+    --border: 33 22% 80%; /* #D8CEC2 */
+    --input: 33 22% 76%;
+    --ring: 215 69% 14%;
 
-    --radius: 0px;
+    --radius: 12px;
 
     /* Dark section variants */
-    --section-dark: 0 0% 3%;
-    --section-dark-foreground: 0 0% 95%;
-    --section-dark-muted: 0 0% 40%;
-    --section-dark-border: 0 0% 12%;
+    --section-dark: 213 29% 6%; /* #0B0F14 */
+    --section-dark-foreground: 33 36% 95%;
+    --section-dark-muted: 33 10% 75%;
+    --section-dark-border: 214 20% 16%;
     
     /* Mid-dark section */
-    --section-mid: 0 0% 8%;
-    --section-mid-foreground: 0 0% 90%;
-    --section-mid-muted: 0 0% 50%;
+    --section-mid: 214 20% 21%; /* #2B3440 */
+    --section-mid-foreground: 33 36% 95%;
+    --section-mid-muted: 33 10% 78%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 0 0% 25%;
@@ -137,17 +136,17 @@
 .gradient-banner {
   background: linear-gradient(
     180deg,
-    hsl(0 0% 3%) 0%,
-    hsl(0 0% 8%) 50%,
-    hsl(0 0% 3%) 100%
+    hsl(var(--section-dark)) 0%,
+    hsl(var(--section-mid)) 50%,
+    hsl(var(--section-dark)) 100%
   );
 }
 
 .gradient-text {
   background: linear-gradient(
     180deg,
-    hsl(0 0% 70%) 0%,
-    hsl(0 0% 30%) 100%
+    hsl(33 36% 95%) 0%,
+    hsl(33 22% 80%) 100%
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

@@ -25,7 +25,7 @@ const SystemCardGrid = ({ cards, className }: SystemCardGridProps) => {
           <Link
             key={card.id}
             to={card.path}
-            className="group rounded-xl border border-[#D8CEC2] bg-[#F7F3EE] px-5 py-4 h-[140px] shadow-[0_6px_20px_rgba(43,52,64,0.08)] hover:shadow-[0_10px_24px_rgba(43,52,64,0.12)] transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0B1F3B]"
+            className="group rounded-xl border border-[#D8CEC2] bg-white/80 px-5 py-4 h-[140px] shadow-[0_6px_20px_rgba(43,52,64,0.08)] hover:shadow-[0_10px_24px_rgba(43,52,64,0.12)] transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0B1F3B]"
           >
             <div className="h-full flex flex-col justify-between">
               <div className="flex items-start justify-between gap-4">

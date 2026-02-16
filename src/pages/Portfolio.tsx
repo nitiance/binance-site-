@@ -121,7 +121,7 @@ const Portfolio = () => {
                   Fully Customizable
                 </p>
               </div>
-              <h3 className="text-xl md:text-2xl font-bold tracking-tight mb-4">
+              <h3 className="text-xl md:text-2xl font-serif font-bold tracking-tight mb-4">
                 Built for your industry
               </h3>
               <p className="text-sm text-white/60 max-w-xl mb-8">
@@ -214,7 +214,7 @@ const Portfolio = () => {
               </p>
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
-              <h2 className="text-2xl md:text-3xl font-bold tracking-tighter leading-tight">
+              <h2 className="text-2xl md:text-3xl font-serif font-bold tracking-tighter leading-tight">
                 I build apps and business systems.
                 <br />
                 Web work is only for selected clients.

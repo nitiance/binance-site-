@@ -95,7 +95,7 @@ const Contact = () => {
       <section className="bg-[#0B0F14] text-[#F7F3EE] border-b border-white/10">
         <div className="max-w-[1200px] mx-auto px-6 py-20 md:py-24">
           <p className="text-xs uppercase tracking-wide text-[#F7F3EE]/50 mb-4">Contact</p>
-          <h1 className="text-3xl md:text-5xl font-semibold tracking-tight">Start a conversation</h1>
+          <h1 className="text-3xl md:text-5xl font-serif font-semibold tracking-tight">Start a conversation</h1>
           <p className="mt-5 text-sm md:text-base text-[#F7F3EE]/75 max-w-xl leading-relaxed">
             Share your proposal, timeline, or business problem. You will get a direct reply.
           </p>

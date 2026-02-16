@@ -14,7 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
+        sans: ["IBM Plex Sans", "system-ui", "sans-serif"],
+        serif: ["Newsreader", "Georgia", "serif"],
       },
       letterSpacing: {
         tighter: "-0.04em",

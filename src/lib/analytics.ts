@@ -2,7 +2,7 @@ type EventPayload = Record<string, string | number | boolean | null | undefined>
 
 declare global {
   interface Window {
-    plausible?: (eventName: string, options?: { props?: Record<string, unknown> }) => void;
+    plausible?: (eventName: string, options?: Record<string, unknown>) => void;
     gtag?: (...args: unknown[]) => void;
     dataLayer?: Array<Record<string, unknown>>;
   }

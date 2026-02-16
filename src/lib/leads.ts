@@ -33,7 +33,25 @@ export type SystemRequestLeadPayload = {
   honeypot: string;
 };
 
-export type LeadSubmissionPayload = ContactLeadPayload | SystemRequestLeadPayload;
+export type WaitlistLeadPayload = {
+  type: "waitlist";
+  email: string;
+  productInterest: string;
+  fullName: string;
+  phone: string;
+  businessName: string;
+  notes: string;
+  pageUrl: string;
+  referrer: string | null;
+  attribution: AttributionContext;
+  turnstileToken: string;
+  honeypot: string;
+};
+
+export type LeadSubmissionPayload =
+  | ContactLeadPayload
+  | SystemRequestLeadPayload
+  | WaitlistLeadPayload;
 
 export type LeadSubmissionResult = {
   ok: boolean;

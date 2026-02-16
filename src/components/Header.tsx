@@ -3,26 +3,24 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navItems = [
+  { label: "Work", path: "/portfolio" },
+  { label: "Systems", path: "/systems" },
+  { label: "Downloads", path: "/downloads" },
   { label: "About", path: "/about" },
-  { label: "Portfolio", path: "/portfolio" },
-  { label: "Systems", path: "/systems/pos" },
-  { label: "Request", path: "/request-system" },
   { label: "Contact", path: "/contact" },
-  { label: "Labs", path: "/labs" },
-  { label: "Community", path: "/community" },
-  { label: "Media", path: "/media" },
 ];
 
 const Header = () => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const isActivePath = (path: string) =>
-    location.pathname === path || (path === "/systems/pos" && location.pathname.startsWith("/systems/"));
+    location.pathname === path ||
+    (path === "/systems" && location.pathname.startsWith("/systems"));
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-white/5">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#0B0F14]/90 backdrop-blur-md border-b border-white/5">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
-        <Link to="/" className="text-base font-bold tracking-tighter text-white">
+        <Link to="/" className="text-base font-serif font-semibold tracking-tighter text-white">
           BinanceXI
         </Link>
 
@@ -43,6 +41,15 @@ const Header = () => {
           ))}
         </nav>
 
+        <div className="hidden md:flex items-center gap-3">
+          <Link
+            to="/request-system"
+            className="inline-flex items-center justify-center rounded-lg bg-[#F7F3EE] text-[#0B1F3B] text-xs font-semibold px-3 py-2 hover:bg-white transition-colors"
+          >
+            Request System
+          </Link>
+        </div>
+
         {/* Mobile toggle - larger touch target */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
@@ -61,9 +68,17 @@ const Header = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden fixed inset-0 top-14 bg-black z-40"
+            className="md:hidden fixed inset-0 top-14 bg-[#0B0F14] z-40"
           >
             <div className="px-6 py-8 flex flex-col gap-2">
+              <Link
+                to="/request-system"
+                onClick={() => setMenuOpen(false)}
+                className="mb-4 inline-flex items-center justify-center rounded-lg bg-[#F7F3EE] text-[#0B1F3B] text-sm font-semibold px-4 py-3"
+              >
+                Request System
+              </Link>
+
               {navItems.map((item, i) => (
                 <motion.div
                   key={item.path}

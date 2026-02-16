@@ -50,7 +50,69 @@ const getClientIp = (req) => {
   return req.socket?.remoteAddress || "unknown";
 };
 
-const isRateLimited = (ip) => {
+const stripPort = (host) => {
+  if (!host) return "";
+  return host.split(":")[0].trim().toLowerCase();
+};
+
+const parseAllowedHosts = () => {
+  const raw = process.env.ALLOWED_ORIGINS;
+  if (!raw) return [];
+
+  return raw
+    .split(",")
+    .map((entry) => entry.trim())
+    .filter(Boolean)
+    .map((entry) => {
+      if (entry.startsWith("http://") || entry.startsWith("https://")) {
+        try {
+          return stripPort(new URL(entry).host);
+        } catch {
+          return stripPort(entry);
+        }
+      }
+      return stripPort(entry);
+    })
+    .filter(Boolean);
+};
+
+const hostMatches = (host, pattern) => {
+  if (!host || !pattern) return false;
+  if (pattern.startsWith("*.")) {
+    const suffix = pattern.slice(1); // ".vercel.app"
+    return host.endsWith(suffix);
+  }
+  return host === pattern;
+};
+
+const isAllowedRequestOrigin = (req) => {
+  const allowedHosts = parseAllowedHosts();
+  if (allowedHosts.length === 0) {
+    return true;
+  }
+
+  const origin = typeof req.headers.origin === "string" ? req.headers.origin : "";
+  let originHost = "";
+  if (origin) {
+    try {
+      originHost = stripPort(new URL(origin).host);
+    } catch {
+      originHost = "";
+    }
+  }
+
+  const hostHeader = typeof req.headers.host === "string" ? stripPort(req.headers.host) : "";
+
+  for (const allowed of allowedHosts) {
+    if (hostMatches(originHost, allowed) || hostMatches(hostHeader, allowed)) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+const isRateLimitedInMemory = (ip) => {
   const now = Date.now();
   const bucket = rateBucket.get(ip);
 
@@ -66,6 +128,58 @@ const isRateLimited = (ip) => {
   rateBucket.set(ip, bucket);
 
   return bucket.count > RATE_LIMIT_MAX_REQUESTS;
+};
+
+const isRateLimited = async (ip) => {
+  const upstashUrl = process.env.UPSTASH_REDIS_REST_URL;
+  const upstashToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+  if (!upstashUrl || !upstashToken) {
+    return isRateLimitedInMemory(ip);
+  }
+
+  const key = `lead:${ip}`;
+  const windowSeconds = Math.ceil(RATE_LIMIT_WINDOW_MS / 1000);
+
+  try {
+    const incrResponse = await fetch(
+      `${upstashUrl.replace(/\/+$/, "")}/incr/${encodeURIComponent(key)}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${upstashToken}`,
+        },
+      },
+    );
+
+    if (!incrResponse.ok) {
+      return isRateLimitedInMemory(ip);
+    }
+
+    const incrData = await incrResponse.json();
+    const count = typeof incrData.result === "number" ? incrData.result : NaN;
+
+    if (!Number.isFinite(count)) {
+      return isRateLimitedInMemory(ip);
+    }
+
+    if (count === 1) {
+      // Best-effort expiry setup (non-fatal if it fails).
+      fetch(
+        `${upstashUrl.replace(/\/+$/, "")}/expire/${encodeURIComponent(key)}/${windowSeconds}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${upstashToken}`,
+          },
+        },
+      ).catch(() => {});
+    }
+
+    return count > RATE_LIMIT_MAX_REQUESTS;
+  } catch {
+    return isRateLimitedInMemory(ip);
+  }
 };
 
 const readJsonBody = async (req) =>
@@ -97,7 +211,7 @@ const readJsonBody = async (req) =>
 
 const validateLead = (payload) => {
   const type = cleanText(payload.type, 40);
-  if (type !== "contact" && type !== "system_request") {
+  if (type !== "contact" && type !== "system_request" && type !== "waitlist") {
     return { error: "Invalid lead type." };
   }
 
@@ -122,6 +236,35 @@ const validateLead = (payload) => {
         businessName,
         email,
         message,
+      },
+    };
+  }
+
+  if (type === "waitlist") {
+    const email = cleanText(payload.email, 160).toLowerCase();
+    const productInterest = cleanText(payload.productInterest, 160);
+    const fullName = cleanText(payload.fullName, 120);
+    const phone = cleanText(payload.phone, 60);
+    const businessName = cleanText(payload.businessName, 160);
+    const notes = cleanText(payload.notes, 2500);
+
+    if (!email || !productInterest) {
+      return { error: "Missing required early access fields." };
+    }
+
+    if (!EMAIL_REGEX.test(email)) {
+      return { error: "Invalid early access email format." };
+    }
+
+    return {
+      value: {
+        type,
+        email,
+        productInterest,
+        fullName,
+        phone,
+        businessName,
+        notes,
       },
     };
   }
@@ -239,6 +382,18 @@ const buildEmailText = ({ lead, context, ip }) => {
       "Message:",
       lead.message,
     );
+  } else if (lead.type === "waitlist") {
+    lines.push(
+      "Early Access",
+      `Email: ${lead.email}`,
+      `Product Interest: ${lead.productInterest}`,
+      `Full Name: ${lead.fullName || "-"}`,
+      `Phone: ${lead.phone || "-"}`,
+      `Business Name: ${lead.businessName || "-"}`,
+      "",
+      "Notes:",
+      lead.notes || "-",
+    );
   } else {
     lines.push(
       "System Request",
@@ -282,7 +437,9 @@ const deliverByEmail = async ({ lead, context, ip }) => {
   const subject =
     lead.type === "contact"
       ? `New Contact Lead - ${lead.businessName}`
-      : `New System Request - ${lead.businessName}`;
+      : lead.type === "waitlist"
+        ? `New Early Access Signup - ${lead.productInterest}`
+        : `New System Request - ${lead.businessName}`;
 
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
@@ -322,18 +479,35 @@ const storeInSupabase = async ({ lead, context, ip }) => {
   const endpoint = `${supabaseUrl.replace(/\/+$/, "")}/rest/v1/${table}`;
   const payload = {
     lead_type: lead.type,
-    full_name: lead.type === "contact" ? lead.name : lead.fullName,
-    business_name: lead.businessName,
-    business_email: lead.type === "contact" ? lead.email : lead.businessEmail,
-    phone: lead.type === "contact" ? null : lead.phone,
-    message: lead.type === "contact" ? lead.message : null,
-    industry: lead.type === "contact" ? null : lead.industry,
-    mode: lead.type === "contact" ? null : lead.mode,
-    devices_count: lead.type === "contact" ? null : lead.devicesCount,
-    branches_count: lead.type === "contact" ? null : lead.branchesCount,
-    modules: lead.type === "contact" ? null : lead.modules,
-    timeline: lead.type === "contact" ? null : lead.timeline,
-    budget_range: lead.type === "contact" ? null : lead.budgetRange || null,
+    full_name:
+      lead.type === "contact"
+        ? lead.name
+        : lead.type === "waitlist"
+          ? lead.fullName || null
+          : lead.fullName,
+    business_name:
+      lead.type === "waitlist" ? lead.businessName || "Early Access" : lead.businessName,
+    business_email:
+      lead.type === "contact"
+        ? lead.email
+        : lead.type === "waitlist"
+          ? lead.email
+          : lead.businessEmail,
+    phone: lead.type === "system_request" ? lead.phone : lead.type === "waitlist" ? lead.phone || null : null,
+    message: lead.type === "contact" ? lead.message : lead.type === "waitlist" ? lead.notes || null : null,
+    industry: lead.type === "system_request" ? lead.industry : lead.type === "waitlist" ? lead.productInterest : null,
+    mode: lead.type === "system_request" ? lead.mode : null,
+    devices_count: lead.type === "system_request" ? lead.devicesCount : null,
+    branches_count: lead.type === "system_request" ? lead.branchesCount : null,
+    modules: lead.type === "system_request" ? lead.modules : null,
+    timeline: lead.type === "system_request" ? lead.timeline : null,
+    budget_range: lead.type === "system_request" ? lead.budgetRange || null : null,
+    extra:
+      lead.type === "waitlist"
+        ? {
+            product_interest: lead.productInterest,
+          }
+        : null,
     page_url: context.pageUrl,
     referrer: context.referrer,
     attribution: context.attribution || null,
@@ -341,19 +515,33 @@ const storeInSupabase = async ({ lead, context, ip }) => {
     user_agent: context.userAgent,
   };
 
-  const response = await fetch(endpoint, {
-    method: "POST",
-    headers: {
-      apikey: supabaseServiceRole,
-      Authorization: `Bearer ${supabaseServiceRole}`,
-      "Content-Type": "application/json",
-      Prefer: "return=minimal",
-    },
-    body: JSON.stringify(payload),
-  });
+  const attemptInsert = async (data) =>
+    fetch(endpoint, {
+      method: "POST",
+      headers: {
+        apikey: supabaseServiceRole,
+        Authorization: `Bearer ${supabaseServiceRole}`,
+        "Content-Type": "application/json",
+        Prefer: "return=minimal",
+      },
+      body: JSON.stringify(data),
+    });
 
+  let response = await attemptInsert(payload);
   if (!response.ok) {
     const errorText = await response.text();
+
+    // Backwards-compatible retry if the "extra" column doesn't exist.
+    if (errorText.includes("column") && errorText.includes("extra")) {
+      const retryPayload = { ...payload };
+      delete retryPayload.extra;
+      response = await attemptInsert(retryPayload);
+
+      if (response.ok) {
+        return { ok: true, skipped: false };
+      }
+    }
+
     return {
       ok: false,
       skipped: false,
@@ -376,8 +564,13 @@ export default async function handler(req, res) {
     return;
   }
 
+  if (!isAllowedRequestOrigin(req)) {
+    json(res, 403, { ok: false, error: "Forbidden origin." });
+    return;
+  }
+
   const ip = getClientIp(req);
-  if (isRateLimited(ip)) {
+  if (await isRateLimited(ip)) {
     json(res, 429, { ok: false, error: "Too many requests. Try again later." });
     return;
   }

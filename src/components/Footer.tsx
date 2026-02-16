@@ -22,7 +22,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-3 gap-12">
           {/* Brand */}
           <div>
-            <p className="text-lg font-bold tracking-tighter">BinanceXI</p>
+            <p className="text-lg font-serif font-semibold tracking-tighter">BinanceXI</p>
             <p className="text-xs text-white/40 mt-2 leading-relaxed">
               Building systems, software, and people.
               <br />
@@ -33,33 +33,45 @@ const Footer = () => {
           {/* Navigation */}
           <div className="flex gap-12 text-xs text-white/50">
             <div className="flex flex-col gap-3">
+              <Link to="/portfolio" className="hover:text-white transition-colors">
+                Work
+              </Link>
+              <Link to="/systems" className="hover:text-white transition-colors">
+                Systems
+              </Link>
+              <Link to="/downloads" className="hover:text-white transition-colors">
+                Downloads
+              </Link>
               <Link to="/about" className="hover:text-white transition-colors">
                 About
-              </Link>
-              <Link to="/portfolio" className="hover:text-white transition-colors">
-                Portfolio
-              </Link>
-              <Link to="/systems/pos" className="hover:text-white transition-colors">
-                Systems
               </Link>
             </div>
             <div className="flex flex-col gap-3">
               <Link to="/request-system" className="hover:text-white transition-colors">
                 Request System
               </Link>
+              <Link to="/early-access" className="hover:text-white transition-colors">
+                Early Access
+              </Link>
               <Link to="/contact" className="hover:text-white transition-colors">
                 Contact
               </Link>
+            </div>
+            <div className="flex flex-col gap-3">
               <Link to="/labs" className="hover:text-white transition-colors">
                 Labs
               </Link>
-            </div>
-            <div className="flex flex-col gap-3">
               <Link to="/community" className="hover:text-white transition-colors">
                 Community
               </Link>
               <Link to="/media" className="hover:text-white transition-colors">
                 Media
+              </Link>
+              <Link to="/privacy" className="hover:text-white transition-colors">
+                Privacy
+              </Link>
+              <Link to="/terms" className="hover:text-white transition-colors">
+                Terms
               </Link>
             </div>
           </div>

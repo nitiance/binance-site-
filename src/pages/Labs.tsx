@@ -20,7 +20,7 @@ const Labs = () => {
               <p className="text-xs text-muted-foreground tracking-tight uppercase mb-4">
                 Approach
               </p>
-              <h2 className="text-xl md:text-2xl font-bold tracking-tighter leading-tight">
+              <h2 className="text-xl md:text-2xl font-serif font-bold tracking-tighter leading-tight">
                 Ship fast. Learn faster.
               </h2>
             </ScrollReveal>

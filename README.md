@@ -18,6 +18,8 @@ npm run build
 npm run preview
 ```
 
+`npm run build` generates `public/sitemap.xml` and `public/robots.txt` from `VITE_SITE_URL` before running Vite.
+
 ## Deploy to Vercel
 
 This repo uses SPA fallback in `vercel.json` and includes a serverless lead endpoint at `/api/leads`.
@@ -37,11 +39,30 @@ Set these environment variables in Vercel (and locally if needed):
 - `VITE_TURNSTILE_SITE_KEY`
 - `TURNSTILE_SECRET_KEY`
 
+### Recommended for analytics (Plausible)
+
+- `VITE_PLAUSIBLE_DOMAIN` (the public site domain for Plausible)
+
+### Required for sitemap/robots
+
+- `VITE_SITE_URL` (e.g. `https://yourdomain.com`)
+
 ### Required for backend email delivery
 
 - `RESEND_API_KEY`
 - `RESEND_FROM_EMAIL` (must be a verified sender in Resend)
 - `LEAD_RECEIVER_EMAIL` (defaults to `nitiance@gmail.com` if unset)
+
+### Recommended for backend hardening
+
+- `ALLOWED_ORIGINS` (comma-separated host allowlist; supports `*.vercel.app`)
+- `UPSTASH_REDIS_REST_URL` (optional; enables persistent rate limiting)
+- `UPSTASH_REDIS_REST_TOKEN` (optional)
+
+### Optional error monitoring (Sentry)
+
+- `VITE_SENTRY_DSN` (frontend)
+- `SENTRY_DSN` (backend; reserved for future server-side capture)
 
 ### Optional persistent storage (Supabase)
 
@@ -73,7 +94,16 @@ create table if not exists public.lead_requests (
   page_url text,
   referrer text,
   attribution jsonb,
+  extra jsonb,
   ip_address text,
   user_agent text
 );
 ```
+
+## Downloads Configuration
+
+Public releases are expected to live on GitHub Releases. Configure downloads in:
+
+- `src/config/downloads.ts`
+
+If no downloads are configured, the `/downloads` route shows a real empty state and points users to Early Access.

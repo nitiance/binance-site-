@@ -195,7 +195,6 @@ export function seedDemoIfEmpty(): void {
   setToStorage(KEYS.orderItems, items);
   
   localStorage.setItem(KEYS.seeded, "true");
-  console.log("Demo data seeded successfully");
 }
 
 export function resetDemoData(): void {

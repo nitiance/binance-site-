@@ -9,12 +9,17 @@ import Layout from "./components/Layout";
 const Index = lazy(() => import("./pages/Index"));
 const About = lazy(() => import("./pages/About"));
 const Portfolio = lazy(() => import("./pages/Portfolio"));
+const Systems = lazy(() => import("./pages/Systems"));
+const Downloads = lazy(() => import("./pages/Downloads"));
+const EarlyAccess = lazy(() => import("./pages/EarlyAccess"));
 const Labs = lazy(() => import("./pages/Labs"));
 const Community = lazy(() => import("./pages/Community"));
 const Media = lazy(() => import("./pages/Media"));
 const Contact = lazy(() => import("./pages/Contact"));
 const RequestSystem = lazy(() => import("./pages/RequestSystem"));
 const SystemDetail = lazy(() => import("./pages/SystemDetail"));
+const Privacy = lazy(() => import("./pages/Privacy"));
+const Terms = lazy(() => import("./pages/Terms"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const POSDemoPage = lazy(() => import("./pages/POSDemoPage"));
 
@@ -35,25 +40,23 @@ const App = () => (
         <Suspense fallback={<RouteLoading />}>
           <Routes>
             <Route path="/demo/pos" element={<POSDemoPage />} />
-            <Route
-              path="*"
-              element={
-                <Layout>
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/portfolio" element={<Portfolio />} />
-                    <Route path="/labs" element={<Labs />} />
-                    <Route path="/community" element={<Community />} />
-                    <Route path="/media" element={<Media />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/request-system" element={<RequestSystem />} />
-                    <Route path="/systems/:systemId" element={<SystemDetail />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </Layout>
-              }
-            />
+            <Route element={<Layout />}>
+              <Route path="/" element={<Index />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/portfolio" element={<Portfolio />} />
+              <Route path="/systems" element={<Systems />} />
+              <Route path="/systems/:systemId" element={<SystemDetail />} />
+              <Route path="/downloads" element={<Downloads />} />
+              <Route path="/early-access" element={<EarlyAccess />} />
+              <Route path="/labs" element={<Labs />} />
+              <Route path="/community" element={<Community />} />
+              <Route path="/media" element={<Media />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/request-system" element={<RequestSystem />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
           </Routes>
         </Suspense>
       </BrowserRouter>
