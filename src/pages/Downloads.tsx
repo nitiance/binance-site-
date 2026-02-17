@@ -1,16 +1,20 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import ScrollReveal from "@/components/animations/ScrollReveal";
+import EarlyAccessForm from "@/components/leads/EarlyAccessForm";
 import { downloads } from "@/config/downloads";
 import { trackEvent } from "@/lib/analytics";
 
 const Downloads = () => {
+  const [searchParams] = useSearchParams();
+
   useEffect(() => {
     trackEvent("downloads_page_viewed");
   }, []);
 
   const publishedDownloads = downloads.filter((app) => app.platforms.length > 0);
   const hasDownloads = publishedDownloads.length > 0;
+  const defaultProductInterest = searchParams.get("product") ?? undefined;
 
   return (
     <div>
@@ -27,14 +31,14 @@ const Downloads = () => {
           </ScrollReveal>
           <ScrollReveal delay={0.1}>
             <div className="mt-8 flex flex-wrap gap-6">
-              <Link
-                to="/early-access"
+              <a
+                href="#early-access"
                 className="inline-flex items-center justify-center rounded-lg bg-[#F7F3EE] text-[#0B1F3B] text-sm font-semibold px-4 py-2.5 hover:bg-white transition-colors"
               >
                 Join Early Access
-              </Link>
+              </a>
               <Link
-                to="/request-system"
+                to="/contact?tab=request-system"
                 className="text-sm font-medium border-b border-[#F7F3EE]/60 pb-0.5 hover:border-[#F7F3EE] transition-colors"
               >
                 Request a system
@@ -56,17 +60,17 @@ const Downloads = () => {
             </p>
 
             <div className="mt-8 flex flex-wrap gap-4">
-              <Link
-                to="/early-access"
+              <a
+                href="#early-access"
                 className="inline-flex items-center justify-center rounded-lg bg-[#0B1F3B] text-[#F7F3EE] text-sm font-semibold px-4 py-2.5 hover:bg-[#0B1F3B]/90 transition-colors"
               >
                 Get notified
-              </Link>
+              </a>
               <Link
-                to="/systems"
+                to="/portfolio"
                 className="inline-flex items-center justify-center rounded-lg border border-[#D8CEC2] bg-white/70 text-[#0B0F14] text-sm font-semibold px-4 py-2.5 hover:bg-white transition-colors"
               >
-                View modules
+                View work
               </Link>
             </div>
           </ScrollReveal>
@@ -133,6 +137,24 @@ const Downloads = () => {
           </div>
         </section>
       )}
+
+      <section id="early-access" className="bg-[#F7F3EE] border-t border-[#D8CEC2] scroll-mt-20">
+        <div className="max-w-[1200px] mx-auto px-6 py-16 md:py-20">
+          <ScrollReveal>
+            <p className="text-xs uppercase tracking-wide text-[#2B3440]/60 mb-4">Early Access</p>
+            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-[#0B0F14]">
+              Get notified when a build is available.
+            </h2>
+            <p className="mt-5 text-sm text-[#2B3440]/75 leading-relaxed max-w-2xl">
+              One form. No spam. When something is ready to test, you will get a direct message.
+            </p>
+          </ScrollReveal>
+
+          <div className="mt-10">
+            <EarlyAccessForm defaultProductInterest={defaultProductInterest} />
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

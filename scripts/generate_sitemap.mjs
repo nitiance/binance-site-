@@ -9,22 +9,12 @@ const baseUrl = baseUrlRaw.replace(/\/+$/, "");
 
 const routes = [
   "/",
-  "/about",
   "/portfolio",
-  "/systems",
-  "/systems/pos",
-  "/systems/inventory",
-  "/systems/analytics",
-  "/systems/offline-sync",
+  "/demo/pos",
   "/downloads",
-  "/early-access",
   "/contact",
-  "/request-system",
   "/privacy",
   "/terms",
-  "/labs",
-  "/community",
-  "/media",
 ];
 
 const escapeXml = (value) =>
@@ -55,4 +45,3 @@ fs.writeFileSync(path.join(publicDir, "sitemap.xml"), sitemapXml, "utf8");
 fs.writeFileSync(path.join(publicDir, "robots.txt"), robotsTxt, "utf8");
 
 console.log(`Generated sitemap.xml and robots.txt for ${baseUrl}`);
-

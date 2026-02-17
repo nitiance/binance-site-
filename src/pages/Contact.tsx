@@ -1,6 +1,8 @@
 import { FormEvent, useMemo, useState } from "react";
 import { Mail, MessageCircle } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
 import TurnstileWidget from "@/components/TurnstileWidget";
+import RequestSystemForm from "@/components/leads/RequestSystemForm";
 import { getAttributionContext } from "@/lib/attribution";
 import { trackEvent } from "@/lib/analytics";
 import { submitLead } from "@/lib/leads";
@@ -20,6 +22,9 @@ const defaultState: ContactFormState = {
 };
 
 const Contact = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get("tab") === "request-system" ? "request-system" : "contact";
+
   const [formState, setFormState] = useState<ContactFormState>(defaultState);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -95,9 +100,13 @@ const Contact = () => {
       <section className="bg-[#0B0F14] text-[#F7F3EE] border-b border-white/10">
         <div className="max-w-[1200px] mx-auto px-6 py-20 md:py-24">
           <p className="text-xs uppercase tracking-wide text-[#F7F3EE]/50 mb-4">Contact</p>
-          <h1 className="text-3xl md:text-5xl font-semibold tracking-tight">Start a conversation</h1>
+          <h1 className="text-3xl md:text-5xl font-semibold tracking-tight">
+            {activeTab === "request-system" ? "Request a system" : "Start a conversation"}
+          </h1>
           <p className="mt-5 text-sm md:text-base text-[#F7F3EE]/75 max-w-xl leading-relaxed">
-            Share your proposal, timeline, or business problem. You will get a direct reply.
+            {activeTab === "request-system"
+              ? "Configure what your business needs. Submission sends to email and opens WhatsApp."
+              : "Share your proposal, timeline, or business problem. You will get a direct reply."}
           </p>
         </div>
       </section>
@@ -134,96 +143,131 @@ const Contact = () => {
             </p>
           </div>
 
-          <form
-            onSubmit={onSubmit}
-            className="rounded-xl border border-[#D8CEC2] bg-white/80 p-6 md:p-8 shadow-[0_12px_30px_rgba(11,31,59,0.08)] space-y-5"
-          >
-            <div>
-              <label htmlFor="contact-name" className="block text-xs uppercase tracking-wide text-[#2B3440]/70 mb-2">
-                Name
-              </label>
-              <input
-                id="contact-name"
-                required
-                value={formState.name}
-                onChange={(event) => setFormState((prev) => ({ ...prev, name: event.target.value }))}
-                className="w-full rounded-lg border border-[#CFC3B5] bg-white px-3 py-2 text-sm text-[#0B0F14] focus:outline-none focus:ring-2 focus:ring-[#0B1F3B]"
-              />
+          <div className="space-y-4">
+            <div className="inline-flex rounded-lg border border-[#D8CEC2] bg-white/70 p-1">
+              <button
+                type="button"
+                onClick={() => {
+                  setSubmitted(false);
+                  setSubmitError("");
+                  const next = new URLSearchParams(searchParams);
+                  next.delete("tab");
+                  setSearchParams(next);
+                }}
+                className={`px-3 py-2 text-xs font-semibold rounded-md transition-colors ${
+                  activeTab === "contact" ? "bg-white text-[#0B0F14] shadow-sm" : "text-[#2B3440]/70 hover:text-[#0B0F14]"
+                }`}
+              >
+                Contact
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setSubmitted(false);
+                  setSubmitError("");
+                  const next = new URLSearchParams(searchParams);
+                  next.set("tab", "request-system");
+                  setSearchParams(next);
+                }}
+                className={`px-3 py-2 text-xs font-semibold rounded-md transition-colors ${
+                  activeTab === "request-system"
+                    ? "bg-white text-[#0B0F14] shadow-sm"
+                    : "text-[#2B3440]/70 hover:text-[#0B0F14]"
+                }`}
+              >
+                Request system
+              </button>
             </div>
 
-            <div>
-              <label htmlFor="contact-email" className="block text-xs uppercase tracking-wide text-[#2B3440]/70 mb-2">
-                Email
-              </label>
-              <input
-                id="contact-email"
-                type="email"
-                required
-                value={formState.email}
-                onChange={(event) => setFormState((prev) => ({ ...prev, email: event.target.value }))}
-                className="w-full rounded-lg border border-[#CFC3B5] bg-white px-3 py-2 text-sm text-[#0B0F14] focus:outline-none focus:ring-2 focus:ring-[#0B1F3B]"
-              />
-            </div>
+            {activeTab === "request-system" ? (
+              <RequestSystemForm />
+            ) : (
+              <form
+                onSubmit={onSubmit}
+                className="rounded-xl border border-[#D8CEC2] bg-white/80 p-6 md:p-8 shadow-[0_12px_30px_rgba(11,31,59,0.08)] space-y-5"
+              >
+                <div>
+                  <label htmlFor="contact-name" className="block text-xs uppercase tracking-wide text-[#2B3440]/70 mb-2">
+                    Name
+                  </label>
+                  <input
+                    id="contact-name"
+                    required
+                    value={formState.name}
+                    onChange={(event) => setFormState((prev) => ({ ...prev, name: event.target.value }))}
+                    className="w-full rounded-lg border border-[#CFC3B5] bg-white px-3 py-2 text-sm text-[#0B0F14] focus:outline-none focus:ring-2 focus:ring-[#0B1F3B]"
+                  />
+                </div>
 
-            <div>
-              <label htmlFor="contact-business" className="block text-xs uppercase tracking-wide text-[#2B3440]/70 mb-2">
-                Business Name
-              </label>
-              <input
-                id="contact-business"
-                required
-                value={formState.businessName}
-                onChange={(event) =>
-                  setFormState((prev) => ({ ...prev, businessName: event.target.value }))
-                }
-                className="w-full rounded-lg border border-[#CFC3B5] bg-white px-3 py-2 text-sm text-[#0B0F14] focus:outline-none focus:ring-2 focus:ring-[#0B1F3B]"
-              />
-            </div>
+                <div>
+                  <label htmlFor="contact-email" className="block text-xs uppercase tracking-wide text-[#2B3440]/70 mb-2">
+                    Email
+                  </label>
+                  <input
+                    id="contact-email"
+                    type="email"
+                    required
+                    value={formState.email}
+                    onChange={(event) => setFormState((prev) => ({ ...prev, email: event.target.value }))}
+                    className="w-full rounded-lg border border-[#CFC3B5] bg-white px-3 py-2 text-sm text-[#0B0F14] focus:outline-none focus:ring-2 focus:ring-[#0B1F3B]"
+                  />
+                </div>
 
-            <div>
-              <label htmlFor="contact-message" className="block text-xs uppercase tracking-wide text-[#2B3440]/70 mb-2">
-                Message
-              </label>
-              <textarea
-                id="contact-message"
-                required
-                rows={5}
-                value={formState.message}
-                onChange={(event) => setFormState((prev) => ({ ...prev, message: event.target.value }))}
-                className="w-full rounded-lg border border-[#CFC3B5] bg-white px-3 py-2 text-sm text-[#0B0F14] focus:outline-none focus:ring-2 focus:ring-[#0B1F3B] resize-y"
-              />
-            </div>
+                <div>
+                  <label htmlFor="contact-business" className="block text-xs uppercase tracking-wide text-[#2B3440]/70 mb-2">
+                    Business Name
+                  </label>
+                  <input
+                    id="contact-business"
+                    required
+                    value={formState.businessName}
+                    onChange={(event) => setFormState((prev) => ({ ...prev, businessName: event.target.value }))}
+                    className="w-full rounded-lg border border-[#CFC3B5] bg-white px-3 py-2 text-sm text-[#0B0F14] focus:outline-none focus:ring-2 focus:ring-[#0B1F3B]"
+                  />
+                </div>
 
-            <div className="hidden" aria-hidden="true">
-              <label htmlFor="contact-company-website">Company website</label>
-              <input
-                id="contact-company-website"
-                tabIndex={-1}
-                autoComplete="off"
-                value={honeypot}
-                onChange={(event) => setHoneypot(event.target.value)}
-              />
-            </div>
+                <div>
+                  <label htmlFor="contact-message" className="block text-xs uppercase tracking-wide text-[#2B3440]/70 mb-2">
+                    Message
+                  </label>
+                  <textarea
+                    id="contact-message"
+                    required
+                    rows={5}
+                    value={formState.message}
+                    onChange={(event) => setFormState((prev) => ({ ...prev, message: event.target.value }))}
+                    className="w-full rounded-lg border border-[#CFC3B5] bg-white px-3 py-2 text-sm text-[#0B0F14] focus:outline-none focus:ring-2 focus:ring-[#0B1F3B] resize-y"
+                  />
+                </div>
 
-            <TurnstileWidget
-              siteKey={turnstileSiteKey}
-              onTokenChange={setTurnstileToken}
-              theme="light"
-            />
+                <div className="hidden" aria-hidden="true">
+                  <label htmlFor="contact-company-website">Company website</label>
+                  <input
+                    id="contact-company-website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={honeypot}
+                    onChange={(event) => setHoneypot(event.target.value)}
+                  />
+                </div>
 
-            <button
-              type="submit"
-              disabled={submitting || (requiresTurnstile && !turnstileToken)}
-              className="w-full rounded-lg bg-[#0B1F3B] disabled:opacity-60 disabled:cursor-not-allowed text-[#F7F3EE] text-sm font-medium px-4 py-3 hover:bg-[#0B1F3B]/90 transition-colors"
-            >
-              {submitting ? "Sending..." : "Send"}
-            </button>
+                <TurnstileWidget siteKey={turnstileSiteKey} onTokenChange={setTurnstileToken} theme="light" />
 
-            {submitError && <p className="text-xs text-[#3B0D0D]">{submitError}</p>}
-            {submitted && (
-              <p className="text-xs text-[#0F2A1D] font-medium">Sent. We'll reply shortly.</p>
+                <button
+                  type="submit"
+                  disabled={submitting || (requiresTurnstile && !turnstileToken)}
+                  className="w-full rounded-lg bg-[#0B1F3B] disabled:opacity-60 disabled:cursor-not-allowed text-[#F7F3EE] text-sm font-medium px-4 py-3 hover:bg-[#0B1F3B]/90 transition-colors"
+                >
+                  {submitting ? "Sending..." : "Send"}
+                </button>
+
+                {submitError && <p className="text-xs text-[#3B0D0D]">{submitError}</p>}
+                {submitted && (
+                  <p className="text-xs text-[#0F2A1D] font-medium">Sent. We'll reply shortly.</p>
+                )}
+              </form>
             )}
-          </form>
+          </div>
         </div>
       </section>
     </div>

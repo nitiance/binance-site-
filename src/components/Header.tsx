@@ -4,18 +4,14 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const navItems = [
   { label: "Work", path: "/portfolio" },
-  { label: "Systems", path: "/systems" },
   { label: "Downloads", path: "/downloads" },
-  { label: "About", path: "/about" },
   { label: "Contact", path: "/contact" },
 ];
 
 const Header = () => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
-  const isActivePath = (path: string) =>
-    location.pathname === path ||
-    (path === "/systems" && location.pathname.startsWith("/systems"));
+  const isActivePath = (path: string) => location.pathname === path;
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#0B0F14]/90 backdrop-blur-md border-b border-white/5">
@@ -43,7 +39,7 @@ const Header = () => {
 
         <div className="hidden md:flex items-center gap-3">
           <Link
-            to="/request-system"
+            to="/contact?tab=request-system"
             className="inline-flex items-center justify-center rounded-lg bg-[#F7F3EE] text-[#0B1F3B] text-xs font-semibold px-3 py-2 hover:bg-white transition-colors"
           >
             Request System
@@ -72,7 +68,7 @@ const Header = () => {
           >
             <div className="px-6 py-8 flex flex-col gap-2">
               <Link
-                to="/request-system"
+                to="/contact?tab=request-system"
                 onClick={() => setMenuOpen(false)}
                 className="mb-4 inline-flex items-center justify-center rounded-lg bg-[#F7F3EE] text-[#0B1F3B] text-sm font-semibold px-4 py-3"
               >

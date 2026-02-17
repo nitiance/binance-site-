@@ -43,10 +43,10 @@ export interface DemoOrderItem {
 
 // ---- STORAGE KEYS ----
 const KEYS = {
-  products: "themasters_demo_products_v1",
-  orders: "themasters_demo_orders_v1",
-  orderItems: "themasters_demo_order_items_v1",
-  seeded: "themasters_demo_seeded_v1",
+  products: "binancexi_demo_products_v1",
+  orders: "binancexi_demo_orders_v1",
+  orderItems: "binancexi_demo_order_items_v1",
+  seeded: "binancexi_demo_seeded_v1",
 };
 
 // ---- HELPERS ----
@@ -62,7 +62,7 @@ export function makeReceiptNumber(): string {
   const d = new Date();
   const pad = (n: number) => String(n).padStart(2, "0");
   const seq = String(Math.floor(Math.random() * 999999)).padStart(6, "0");
-  return `TM-${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}-${seq}`;
+  return `BXI-${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}-${seq}`;
 }
 
 function getRandomDate(daysAgo: number): string {

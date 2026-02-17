@@ -109,11 +109,15 @@ const TurnstileWidget = ({
   }, [onTokenChange, siteKey, theme]);
 
   if (!siteKey) {
-    return (
-      <p className="text-xs text-[#3B0D0D]">
-        Spam protection is not configured. Add <code>VITE_TURNSTILE_SITE_KEY</code>.
-      </p>
-    );
+    // Don't show configuration details in production UI.
+    if (import.meta.env.DEV) {
+      return (
+        <p className="text-xs text-[#3B0D0D]">
+          Spam protection is not configured. Add <code>VITE_TURNSTILE_SITE_KEY</code>.
+        </p>
+      );
+    }
+    return null;
   }
 
   return <div ref={containerRef} className="min-h-[65px]" />;

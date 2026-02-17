@@ -15,6 +15,17 @@ const socialLinks = [
   },
 ];
 
+const contactLinks = [
+  {
+    label: "Email",
+    url: "mailto:nitiance@gmail.com",
+  },
+  {
+    label: "WhatsApp",
+    url: "https://wa.me/263782750867?text=Hi%20Nitiance%2C%20I%20want%20to%20discuss%20a%20project.",
+  },
+] as const;
+
 const Footer = () => {
   return (
     <footer className="section-dark border-t border-white/5">
@@ -36,37 +47,22 @@ const Footer = () => {
               <Link to="/portfolio" className="hover:text-white transition-colors">
                 Work
               </Link>
-              <Link to="/systems" className="hover:text-white transition-colors">
-                Systems
-              </Link>
               <Link to="/downloads" className="hover:text-white transition-colors">
                 Downloads
               </Link>
-              <Link to="/about" className="hover:text-white transition-colors">
-                About
+              <Link to="/downloads#early-access" className="hover:text-white transition-colors">
+                Early Access
               </Link>
             </div>
             <div className="flex flex-col gap-3">
-              <Link to="/request-system" className="hover:text-white transition-colors">
+              <Link to="/contact?tab=request-system" className="hover:text-white transition-colors">
                 Request System
-              </Link>
-              <Link to="/early-access" className="hover:text-white transition-colors">
-                Early Access
               </Link>
               <Link to="/contact" className="hover:text-white transition-colors">
                 Contact
               </Link>
             </div>
             <div className="flex flex-col gap-3">
-              <Link to="/labs" className="hover:text-white transition-colors">
-                Labs
-              </Link>
-              <Link to="/community" className="hover:text-white transition-colors">
-                Community
-              </Link>
-              <Link to="/media" className="hover:text-white transition-colors">
-                Media
-              </Link>
               <Link to="/privacy" className="hover:text-white transition-colors">
                 Privacy
               </Link>
@@ -78,6 +74,18 @@ const Footer = () => {
 
           {/* Social */}
           <div className="flex flex-col gap-3 text-xs text-white/50 md:items-end">
+            {contactLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.url}
+                target={link.url.startsWith("http") ? "_blank" : undefined}
+                rel={link.url.startsWith("http") ? "noopener noreferrer" : undefined}
+                className="hover:text-white transition-colors"
+              >
+                {link.label}
+              </a>
+            ))}
+            <div className="h-px w-full md:w-48 bg-white/10 my-1" aria-hidden="true" />
             {socialLinks.map((link) => (
               <a
                 key={link.platform}
