@@ -23,7 +23,7 @@ export const systemDetails: SystemDetail[] = [
     path: "/systems/pos",
     accent: "#0B1F3B",
     intro:
-      "A fast, keyboard-first point-of-sale terminal built for daily volume and low-friction checkout. It supports barcode scanning, cash handling, and receipt generation.",
+      "A fast, keyboard-first point-of-sale module within the BinanceXI business system suite. Built for daily volume and low-friction checkout, with barcode scanning, cash handling, and receipt generation.",
     highlights: [
       "Rapid item lookup with scanner and hotkeys",
       "Discount rules and clean cashier workflow",
@@ -48,7 +48,7 @@ export const systemDetails: SystemDetail[] = [
     path: "/systems/inventory",
     accent: "#0F2A1D",
     intro:
-      "An operational inventory control dashboard for tracking stock movement, low-stock alerts, and purchase planning across one or multiple locations.",
+      "An inventory control module within the BinanceXI business system suite for tracking stock movement, low-stock alerts, and purchase planning across one or multiple locations.",
     highlights: [
       "Current stock visibility by product and branch",
       "Low-stock and out-of-stock alert thresholds",
@@ -73,7 +73,7 @@ export const systemDetails: SystemDetail[] = [
     path: "/systems/analytics",
     accent: "#3B0D0D",
     intro:
-      "A focused analytics workspace that turns daily transactions into clear profit, margin, and performance signals your team can act on quickly.",
+      "An analytics module within the BinanceXI business system suite that turns daily transactions into clear profit, margin, and performance signals your team can act on quickly.",
     highlights: [
       "Revenue, margin, and trend summaries",
       "Top products, categories, and branch comparisons",
@@ -98,7 +98,7 @@ export const systemDetails: SystemDetail[] = [
     path: "/systems/offline-sync",
     accent: "#B08D57",
     intro:
-      "A resilience layer that keeps your system running offline and synchronizes safely when internet access returns, reducing downtime risk.",
+      "A resilience module within the BinanceXI business system suite that keeps operations running offline and synchronizes safely when internet access returns, reducing downtime risk.",
     highlights: [
       "Offline-first transaction capture",
       "Conflict-aware sync and reconciliation",

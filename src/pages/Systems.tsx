@@ -16,11 +16,12 @@ const Systems = () => {
         <div className="max-w-[1200px] mx-auto px-6 py-20 md:py-24">
           <ScrollReveal>
             <p className="text-xs uppercase tracking-wide text-[#F7F3EE]/50 mb-4">Systems</p>
-            <h1 className="text-3xl md:text-5xl font-serif font-semibold tracking-tight">
+            <h1 className="text-3xl md:text-5xl font-semibold tracking-tight">
               Operational software for real businesses.
             </h1>
             <p className="mt-5 text-sm md:text-base text-[#F7F3EE]/75 max-w-2xl leading-relaxed">
-              POS, inventory, analytics, and offline resilience. Built to be fast, auditable, and usable every day.
+              One integrated business system with modular components: POS, inventory, analytics, and offline sync. Built
+              to be fast, auditable, and usable every day.
             </p>
           </ScrollReveal>
           <ScrollReveal delay={0.1}>
@@ -45,7 +46,7 @@ const Systems = () => {
       <section className="bg-[#F7F3EE]">
         <div className="max-w-[1200px] mx-auto px-6 py-16 md:py-20">
           <ScrollReveal>
-            <p className="text-xs uppercase tracking-wide text-[#2B3440]/60 mb-6">Directory</p>
+            <p className="text-xs uppercase tracking-wide text-[#2B3440]/60 mb-6">Modules</p>
           </ScrollReveal>
           <ScrollReveal delay={0.05}>
             <SystemCardGrid cards={systemCards} />
@@ -57,7 +58,7 @@ const Systems = () => {
         <div className="max-w-[1200px] mx-auto px-6 py-16 md:py-20 grid lg:grid-cols-2 gap-10 lg:gap-16">
           <ScrollReveal>
             <p className="text-xs uppercase tracking-wide text-[#2B3440]/60 mb-4">How engagements work</p>
-            <h2 className="text-2xl md:text-3xl font-serif font-semibold tracking-tight text-[#0B0F14]">
+            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-[#0B0F14]">
               Clear scope. Clean delivery.
             </h2>
             <p className="mt-5 text-sm text-[#2B3440]/75 leading-relaxed max-w-md">

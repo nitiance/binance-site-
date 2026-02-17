@@ -41,7 +41,7 @@ const Index = () => {
             </ScrollReveal>
             <TextReveal
               as="h2"
-              className="text-3xl md:text-5xl lg:text-6xl font-serif font-bold tracking-tighter leading-[1.05]"
+              className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tighter leading-[1.05]"
               delay={0.1}
             >
               Building systems that compound.
@@ -64,7 +64,7 @@ const Index = () => {
                   to="/systems"
                   className="text-sm font-medium text-foreground border-b border-foreground pb-0.5 hover:opacity-70 transition-opacity"
                 >
-                  View systems
+                  View modules
                 </Link>
                 <Link
                   to="/portfolio"
@@ -90,7 +90,7 @@ const Index = () => {
             {divisions.map((item, i) => (
               <ScrollReveal key={item.title} delay={0.1 * i}>
                 <Link to={item.link} className="group block">
-                  <h3 className="text-lg font-serif font-bold tracking-tight">
+                  <h3 className="text-lg font-bold tracking-tight">
                     {item.title}
                   </h3>
                   <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
@@ -135,13 +135,13 @@ const Index = () => {
               <p className="text-xs uppercase tracking-tight text-[#2B3440]/60 mb-3">
                 Systems
               </p>
-              <h2 className="text-2xl md:text-3xl font-serif font-semibold tracking-tight text-[#0B0F14]">
-                Built to run real businesses.
+              <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-[#0B0F14]">
+                One suite, modular components.
               </h2>
             </div>
           </ScrollReveal>
           <ScrollReveal delay={0.05}>
-            <SystemCardGrid cards={systemCards} />
+            <SystemCardGrid cards={systemCards.slice(0, 3)} />
           </ScrollReveal>
         </div>
       </section>
@@ -154,7 +154,7 @@ const Index = () => {
               <p className="text-xs text-muted-foreground tracking-tight uppercase mb-4">
                 Collaboration
               </p>
-              <h2 className="text-2xl md:text-3xl font-serif font-bold tracking-tighter leading-tight">
+              <h2 className="text-2xl md:text-3xl font-bold tracking-tighter leading-tight">
                 Open to working
                 <br />
                 with serious people.

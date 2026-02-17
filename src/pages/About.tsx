@@ -20,7 +20,7 @@ const About = () => {
               <p className="text-xs text-muted-foreground tracking-tight uppercase mb-4">
                 Origin
               </p>
-              <h2 className="text-xl md:text-2xl font-serif font-bold tracking-tighter leading-tight">
+              <h2 className="text-xl md:text-2xl font-bold tracking-tighter leading-tight">
                 Founded on a simple premise.
               </h2>
             </ScrollReveal>

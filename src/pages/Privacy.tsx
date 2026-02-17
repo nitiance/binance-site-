@@ -7,7 +7,7 @@ const Privacy = () => {
         <div className="max-w-[1200px] mx-auto px-6 py-20 md:py-24">
           <ScrollReveal>
             <p className="text-xs uppercase tracking-wide text-[#F7F3EE]/50 mb-4">Legal</p>
-            <h1 className="text-3xl md:text-5xl font-serif font-semibold tracking-tight">
+            <h1 className="text-3xl md:text-5xl font-semibold tracking-tight">
               Privacy Policy
             </h1>
             <p className="mt-5 text-sm md:text-base text-[#F7F3EE]/75 max-w-2xl leading-relaxed">
@@ -20,7 +20,7 @@ const Privacy = () => {
       <section className="bg-[#F7F3EE]">
         <div className="max-w-[900px] mx-auto px-6 py-16 md:py-20 space-y-10">
           <div className="rounded-xl border border-[#D8CEC2] bg-white/70 p-6 shadow-[0_8px_24px_rgba(11,31,59,0.06)]">
-            <h2 className="text-xl font-serif font-semibold tracking-tight text-[#0B0F14]">
+            <h2 className="text-xl font-semibold tracking-tight text-[#0B0F14]">
               Data we collect
             </h2>
             <p className="mt-3 text-sm text-[#2B3440]/75 leading-relaxed">
@@ -30,7 +30,7 @@ const Privacy = () => {
           </div>
 
           <div className="rounded-xl border border-[#D8CEC2] bg-white/70 p-6 shadow-[0_8px_24px_rgba(11,31,59,0.06)]">
-            <h2 className="text-xl font-serif font-semibold tracking-tight text-[#0B0F14]">
+            <h2 className="text-xl font-semibold tracking-tight text-[#0B0F14]">
               Why we collect it
             </h2>
             <p className="mt-3 text-sm text-[#2B3440]/75 leading-relaxed">
@@ -40,7 +40,7 @@ const Privacy = () => {
           </div>
 
           <div className="rounded-xl border border-[#D8CEC2] bg-white/70 p-6 shadow-[0_8px_24px_rgba(11,31,59,0.06)]">
-            <h2 className="text-xl font-serif font-semibold tracking-tight text-[#0B0F14]">
+            <h2 className="text-xl font-semibold tracking-tight text-[#0B0F14]">
               Analytics
             </h2>
             <p className="mt-3 text-sm text-[#2B3440]/75 leading-relaxed">
@@ -50,7 +50,7 @@ const Privacy = () => {
           </div>
 
           <div className="rounded-xl border border-[#D8CEC2] bg-white/70 p-6 shadow-[0_8px_24px_rgba(11,31,59,0.06)]">
-            <h2 className="text-xl font-serif font-semibold tracking-tight text-[#0B0F14]">
+            <h2 className="text-xl font-semibold tracking-tight text-[#0B0F14]">
               Retention
             </h2>
             <p className="mt-3 text-sm text-[#2B3440]/75 leading-relaxed">
@@ -60,7 +60,7 @@ const Privacy = () => {
           </div>
 
           <div className="rounded-xl border border-[#D8CEC2] bg-white/70 p-6 shadow-[0_8px_24px_rgba(11,31,59,0.06)]">
-            <h2 className="text-xl font-serif font-semibold tracking-tight text-[#0B0F14]">
+            <h2 className="text-xl font-semibold tracking-tight text-[#0B0F14]">
               Contact
             </h2>
             <p className="mt-3 text-sm text-[#2B3440]/75 leading-relaxed">

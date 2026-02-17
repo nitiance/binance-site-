@@ -33,7 +33,7 @@ const SystemCardGrid = ({ cards, className }: SystemCardGridProps) => {
                   <Icon className="w-4 h-4" style={{ color: card.accent }} />
                 </div>
                 <span className="text-xs tracking-wide uppercase text-[#2B3440]/60">
-                  System
+                  Module
                 </span>
               </div>
 

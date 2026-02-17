@@ -28,25 +28,14 @@ const GradientBanner = ({
       ref={ref}
       className={`relative ${height} overflow-hidden flex items-center justify-center`}
     >
-      {/* Animated gradient sweeping from the side */}
-      <motion.div 
-        className="absolute inset-0 bg-gradient-to-r from-black via-zinc-900 to-black"
-        initial={{ x: "-100%" }}
-        animate={{ x: "0%" }}
-        transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
-      />
-      
-      {/* Secondary gradient layer for depth */}
-      <motion.div 
-        className="absolute inset-0 bg-gradient-to-br from-transparent via-zinc-800/20 to-transparent"
+      {/* Calm background (no "wipe" animation) */}
+      <motion.div
+        className="absolute inset-0 gradient-banner"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1.5, delay: 0.5 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
       />
-      
-      {/* Noise texture overlay */}
-      <div className="absolute inset-0 noise-texture opacity-60" />
-      
+
       {/* Radial glow */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.03)_0%,_transparent_70%)]" />
 
@@ -57,7 +46,7 @@ const GradientBanner = ({
         {showLogo && !title && (
           <>
             <motion.h1 
-              className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-serif font-bold tracking-tighter gradient-text select-none"
+              className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter gradient-text select-none"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
@@ -84,7 +73,7 @@ const GradientBanner = ({
               {subtitle}
             </motion.p>
             <motion.h1 
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold tracking-tighter leading-[1.1] text-white max-w-[800px]"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter leading-[1.1] text-white max-w-[800px]"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}

@@ -20,7 +20,7 @@ const Media = () => {
               <p className="text-xs text-muted-foreground tracking-tight uppercase mb-4">
                 Philosophy
               </p>
-              <h2 className="text-xl md:text-2xl font-serif font-bold tracking-tighter leading-tight">
+              <h2 className="text-xl md:text-2xl font-bold tracking-tighter leading-tight">
                 No hype. No thumbnails screaming at you.
               </h2>
             </ScrollReveal>

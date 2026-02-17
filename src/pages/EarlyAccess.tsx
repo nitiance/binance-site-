@@ -114,7 +114,7 @@ const EarlyAccess = () => {
         <div className="max-w-[1200px] mx-auto px-6 py-20 md:py-24">
           <ScrollReveal>
             <p className="text-xs uppercase tracking-wide text-[#F7F3EE]/50 mb-4">Early Access</p>
-            <h1 className="text-3xl md:text-5xl font-serif font-semibold tracking-tight">
+            <h1 className="text-3xl md:text-5xl font-semibold tracking-tight">
               Be first to test new releases.
             </h1>
             <p className="mt-5 text-sm md:text-base text-[#F7F3EE]/75 max-w-2xl leading-relaxed">

@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 const NotFound = () => {
   return (
     <section className="bg-[#F7F3EE] min-h-[70vh] flex items-center justify-center px-6">
-      <div className="max-w-md w-full text-center rounded-xl border border-[#D8CEC2] bg-white/70 p-8 shadow-[0_12px_30px_rgba(11,31,59,0.08)]">
+        <div className="max-w-md w-full text-center rounded-xl border border-[#D8CEC2] bg-white/70 p-8 shadow-[0_12px_30px_rgba(11,31,59,0.08)]">
         <p className="text-xs uppercase tracking-wide text-[#2B3440]/60">404</p>
-        <h1 className="mt-2 text-3xl md:text-4xl font-serif font-semibold tracking-tight text-[#0B0F14]">
+        <h1 className="mt-2 text-3xl md:text-4xl font-semibold tracking-tight text-[#0B0F14]">
           Page not found.
         </h1>
         <p className="mt-4 text-sm text-[#2B3440]/75 leading-relaxed">

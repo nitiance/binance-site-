@@ -183,7 +183,7 @@ const RequestSystem = () => {
       <section className="bg-[#0B0F14] text-[#F7F3EE] border-b border-white/10">
         <div className="max-w-[1200px] mx-auto px-6 py-20 md:py-24">
           <p className="text-xs uppercase tracking-wide text-[#F7F3EE]/50 mb-4">Lead Capture</p>
-          <h1 className="text-3xl md:text-5xl font-serif font-semibold tracking-tight">Request a System</h1>
+          <h1 className="text-3xl md:text-5xl font-semibold tracking-tight">Request a System</h1>
           <p className="mt-5 text-sm md:text-base text-[#F7F3EE]/75 max-w-2xl leading-relaxed">
             Configure what your business needs. Submission sends to backend email and opens WhatsApp.
           </p>

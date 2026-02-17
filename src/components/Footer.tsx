@@ -22,7 +22,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-3 gap-12">
           {/* Brand */}
           <div>
-            <p className="text-lg font-serif font-semibold tracking-tighter">BinanceXI</p>
+            <p className="text-lg font-semibold tracking-tight">BinanceXI</p>
             <p className="text-xs text-white/40 mt-2 leading-relaxed">
               Building systems, software, and people.
               <br />

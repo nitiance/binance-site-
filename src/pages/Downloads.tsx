@@ -16,14 +16,14 @@ const Downloads = () => {
     <div>
       <section className="bg-[#0B0F14] text-[#F7F3EE] border-b border-white/10">
         <div className="max-w-[1200px] mx-auto px-6 py-20 md:py-24">
-          <ScrollReveal>
-            <p className="text-xs uppercase tracking-wide text-[#F7F3EE]/50 mb-4">Downloads</p>
-            <h1 className="text-3xl md:text-5xl font-serif font-semibold tracking-tight">
-              Public builds, when they are ready.
-            </h1>
-            <p className="mt-5 text-sm md:text-base text-[#F7F3EE]/75 max-w-2xl leading-relaxed">
-              Until releases are published, use Early Access to get notified and to receive test builds.
-            </p>
+            <ScrollReveal>
+              <p className="text-xs uppercase tracking-wide text-[#F7F3EE]/50 mb-4">Downloads</p>
+              <h1 className="text-3xl md:text-5xl font-semibold tracking-tight">
+                Public builds, when they are ready.
+              </h1>
+              <p className="mt-5 text-sm md:text-base text-[#F7F3EE]/75 max-w-2xl leading-relaxed">
+                Until releases are published, use Early Access to get notified and to receive test builds.
+              </p>
           </ScrollReveal>
           <ScrollReveal delay={0.1}>
             <div className="mt-8 flex flex-wrap gap-6">
@@ -48,7 +48,7 @@ const Downloads = () => {
         <div className="max-w-[1200px] mx-auto px-6 py-16 md:py-20 grid lg:grid-cols-2 gap-10 lg:gap-16">
           <ScrollReveal>
             <p className="text-xs uppercase tracking-wide text-[#2B3440]/60 mb-4">Status</p>
-            <h2 className="text-2xl md:text-3xl font-serif font-semibold tracking-tight text-[#0B0F14]">
+            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-[#0B0F14]">
               No public downloads yet.
             </h2>
             <p className="mt-5 text-sm text-[#2B3440]/75 leading-relaxed max-w-md">
@@ -66,7 +66,7 @@ const Downloads = () => {
                 to="/systems"
                 className="inline-flex items-center justify-center rounded-lg border border-[#D8CEC2] bg-white/70 text-[#0B0F14] text-sm font-semibold px-4 py-2.5 hover:bg-white transition-colors"
               >
-                View systems
+                View modules
               </Link>
             </div>
           </ScrollReveal>
