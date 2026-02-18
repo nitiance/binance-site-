@@ -66,12 +66,14 @@ const Index = () => {
             </ScrollReveal>
             <ScrollReveal delay={0.08}>
               <div className="flex flex-wrap gap-4 md:justify-end">
-                <Link
-                  to="/demo/pos"
+                <a
+                  href="https://binacepos.vercel.app/?demo=1"
+                  target="_blank"
+                  rel="noreferrer"
                   className="inline-flex items-center justify-center rounded-lg bg-[#0B1F3B] text-[#F7F3EE] text-sm font-semibold px-4 py-2.5 hover:bg-[#0B1F3B]/90 transition-colors"
                 >
                   Try the demo
-                </Link>
+                </a>
                 <Link
                   to="/contact?tab=request-system"
                   className="inline-flex items-center justify-center rounded-lg border border-[#D8CEC2] bg-white/70 text-[#0B0F14] text-sm font-semibold px-4 py-2.5 hover:bg-white transition-colors"

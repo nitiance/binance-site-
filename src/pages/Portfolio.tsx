@@ -64,12 +64,14 @@ const Portfolio = () => {
 
           <ScrollReveal delay={0.08}>
             <div className="mt-8 flex flex-wrap gap-4">
-              <Link
-                to="/demo/pos"
+              <a
+                href="https://binacepos.vercel.app/?demo=1"
+                target="_blank"
+                rel="noreferrer"
                 className="inline-flex items-center justify-center rounded-lg bg-[#F7F3EE] text-[#0B1F3B] text-sm font-semibold px-4 py-2.5 hover:bg-white transition-colors"
               >
                 Try demo
-              </Link>
+              </a>
               <Link
                 to="/contact?tab=request-system"
                 className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 text-white text-sm font-semibold px-4 py-2.5 hover:bg-white/10 transition-colors"

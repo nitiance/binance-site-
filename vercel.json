@@ -1,8 +1,6 @@
 {
   "routes": [
     { "handle": "filesystem" },
-    { "src": "/pos$", "status": 308, "headers": { "Location": "/pos/" } },
-    { "src": "/pos/(.*)", "dest": "https://binacepos.vercel.app/$1" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
