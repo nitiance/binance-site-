@@ -17,14 +17,10 @@ const industryOptions = [
 const modeOptions = ["Offline-only", "Online-only", "Hybrid (offline + online sync)"] as const;
 const timelineOptions = ["ASAP", "2-4 weeks", "1-2 months"] as const;
 
-const moduleOptions = [
-  "POS",
-  "Inventory",
-  "Receipts",
-  "Expenses",
-  "Reports",
-  "Profit & Loss analytics",
-  "Barcode scanning",
+const systemOptions = [
+  "BinanceXI POS (Retail, Pharmacy, Repair)",
+  "Custom System Request",
+  "Other",
 ] as const;
 
 type RequestFormState = {
@@ -38,7 +34,7 @@ type RequestFormState = {
   branchesCount: string;
   timeline: string;
   budgetRange: string;
-  modules: string[];
+  systemRequired: string;
 };
 
 const initialState: RequestFormState = {
@@ -52,13 +48,12 @@ const initialState: RequestFormState = {
   branchesCount: "1",
   timeline: "",
   budgetRange: "",
-  modules: [],
+  systemRequired: "BinanceXI POS (Retail, Pharmacy, Repair)",
 };
 
 const RequestSystemForm = () => {
   const [formState, setFormState] = useState<RequestFormState>(initialState);
   const [submitted, setSubmitted] = useState(false);
-  const [moduleError, setModuleError] = useState("");
   const [submitError, setSubmitError] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState("");
@@ -68,8 +63,6 @@ const RequestSystemForm = () => {
   const requiresTurnstile = Boolean(turnstileSiteKey);
 
   const summary = useMemo(() => {
-    const selectedModules = formState.modules.length > 0 ? formState.modules.join(", ") : "None selected";
-
     return [
       "System Request",
       "",
@@ -80,11 +73,11 @@ const RequestSystemForm = () => {
       `Phone / WhatsApp: ${formState.phone}`,
       "",
       "System configuration",
+      `System Required: ${formState.systemRequired}`,
       `Industry: ${formState.industry}`,
       `Mode: ${formState.mode}`,
       `Devices/computers count: ${formState.devicesCount}`,
       `Branches count: ${formState.branchesCount}`,
-      `Modules: ${selectedModules}`,
       `Timeline: ${formState.timeline}`,
       `Budget range: ${formState.budgetRange || "Not provided"}`,
     ].join("\n");
@@ -96,27 +89,8 @@ const RequestSystemForm = () => {
     [summary],
   );
 
-  const handleModuleToggle = (module: string, checked: boolean) => {
-    setFormState((prev) => {
-      const modules = checked
-        ? prev.modules.includes(module)
-          ? prev.modules
-          : [...prev.modules, module]
-        : prev.modules.filter((item) => item !== module);
-
-      return { ...prev, modules };
-    });
-
-    setModuleError("");
-  };
-
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    if (formState.modules.length === 0) {
-      setModuleError("Select at least one module.");
-      return;
-    }
 
     if (requiresTurnstile && !turnstileToken) {
       setSubmitError("Complete the spam protection check before submitting.");
@@ -140,7 +114,7 @@ const RequestSystemForm = () => {
       mode: formState.mode,
       devicesCount: Number.parseInt(formState.devicesCount, 10),
       branchesCount: Number.parseInt(formState.branchesCount, 10),
-      modules: formState.modules,
+      systemRequired: formState.systemRequired,
       timeline: formState.timeline,
       budgetRange: formState.budgetRange,
       pageUrl: window.location.href,
@@ -154,7 +128,7 @@ const RequestSystemForm = () => {
       setSubmitted(true);
       trackEvent("request_system_submitted", {
         delivered: Boolean(result.delivered),
-        modules: formState.modules.length,
+        systemRequired: formState.systemRequired,
         channel: attribution.firstTouch?.channel ?? "direct",
       });
     } else {
@@ -306,24 +280,22 @@ const RequestSystemForm = () => {
       </div>
 
       <div className="mt-6">
-        <p className="text-xs uppercase tracking-wide text-[#2B3440]/70 mb-3">Needed modules</p>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2">
-          {moduleOptions.map((module) => (
-            <label
-              key={module}
-              className="flex items-center gap-2 rounded-lg border border-[#D8CEC2] bg-white px-3 py-2 text-sm text-[#0B0F14]"
-            >
-              <input
-                type="checkbox"
-                checked={formState.modules.includes(module)}
-                onChange={(event) => handleModuleToggle(module, event.target.checked)}
-                className="accent-[#0B1F3B]"
-              />
-              {module}
-            </label>
+        <label htmlFor="rs-system" className="block text-xs uppercase tracking-wide text-[#2B3440]/70 mb-3">
+          System requested
+        </label>
+        <select
+          id="rs-system"
+          required
+          value={formState.systemRequired}
+          onChange={(event) => setFormState((prev) => ({ ...prev, systemRequired: event.target.value }))}
+          className="w-full rounded-lg border border-[#CFC3B5] bg-white px-3 py-2 text-sm text-[#0B0F14] focus:outline-none focus:ring-2 focus:ring-[#0B1F3B]"
+        >
+          {systemOptions.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
           ))}
-        </div>
-        {moduleError && <p className="text-xs text-[#3B0D0D] mt-2">{moduleError}</p>}
+        </select>
       </div>
 
       <div className="grid md:grid-cols-2 gap-5 md:gap-6 mt-6">

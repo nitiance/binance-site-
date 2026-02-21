@@ -1,6 +1,8 @@
 import { FormEvent, useMemo, useState } from "react";
 import { Mail, MessageCircle } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
+import GradientBanner from "@/components/GradientBanner";
+import ScrollReveal from "@/components/animations/ScrollReveal";
 import TurnstileWidget from "@/components/TurnstileWidget";
 import RequestSystemForm from "@/components/leads/RequestSystemForm";
 import { getAttributionContext } from "@/lib/attribution";
@@ -97,6 +99,8 @@ const Contact = () => {
 
   return (
     <div>
+      {/* Hero - Gradient Banner */}
+      <GradientBanner height="h-[60vh]" title="Contact" subtitle="Get in touch. We'll respond within 24 hours." showLogo={false} />
       <section className="bg-[#0B0F14] text-[#F7F3EE] border-b border-white/10">
         <div className="max-w-[1200px] mx-auto px-6 py-20 md:py-24">
           <p className="text-xs uppercase tracking-wide text-[#F7F3EE]/50 mb-4">Contact</p>

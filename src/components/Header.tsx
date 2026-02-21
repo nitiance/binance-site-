@@ -40,9 +40,9 @@ const Header = () => {
         <div className="hidden md:flex items-center gap-3">
           <Link
             to="/contact?tab=request-system"
-            className="inline-flex items-center justify-center rounded-lg bg-[#F7F3EE] text-[#0B1F3B] text-xs font-semibold px-3 py-2 hover:bg-white transition-colors"
+            className="inline-flex items-center justify-center rounded-lg bg-[#F7F3EE] text-[#0B1F3B] text-xs font-semibold px-4 py-2.5 hover:bg-white transition-colors"
           >
-            Request System
+            Get a System
           </Link>
         </div>
 

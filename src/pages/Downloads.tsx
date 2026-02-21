@@ -1,5 +1,6 @@
-import { useEffect } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useSearchParams, Link } from "react-router-dom";
+import GradientBanner from "@/components/GradientBanner";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import EarlyAccessForm from "@/components/leads/EarlyAccessForm";
 import { downloads } from "@/config/downloads";
@@ -18,6 +19,9 @@ const Downloads = () => {
 
   return (
     <div>
+      {/* Hero - Gradient Banner */}
+      <GradientBanner height="h-[60vh]" title="Downloads" subtitle="Public builds, when they are ready" showLogo={false} />
+
       <section className="bg-[#0B0F14] text-[#F7F3EE] border-b border-white/10">
         <div className="max-w-[1200px] mx-auto px-6 py-20 md:py-24">
             <ScrollReveal>
@@ -33,7 +37,7 @@ const Downloads = () => {
             <div className="mt-8 flex flex-wrap gap-6">
               <a
                 href="#early-access"
-                className="inline-flex items-center justify-center rounded-lg bg-[#F7F3EE] text-[#0B1F3B] text-sm font-semibold px-4 py-2.5 hover:bg-white transition-colors"
+                className="inline-flex items-center justify-center rounded-lg bg-[#F7F3EE] text-[#0B1F3B] text-sm font-semibold px-6 py-3 hover:bg-white transition-colors"
               >
                 Join Early Access
               </a>
@@ -62,13 +66,13 @@ const Downloads = () => {
             <div className="mt-8 flex flex-wrap gap-4">
               <a
                 href="#early-access"
-                className="inline-flex items-center justify-center rounded-lg bg-[#0B1F3B] text-[#F7F3EE] text-sm font-semibold px-4 py-2.5 hover:bg-[#0B1F3B]/90 transition-colors"
+                className="inline-flex items-center justify-center rounded-lg bg-[#0B1F3B] text-[#F7F3EE] text-sm font-semibold px-6 py-3 hover:bg-[#0B1F3B]/90 transition-colors"
               >
                 Get notified
               </a>
               <Link
                 to="/portfolio"
-                className="inline-flex items-center justify-center rounded-lg border border-[#D8CEC2] bg-white/70 text-[#0B0F14] text-sm font-semibold px-4 py-2.5 hover:bg-white transition-colors"
+                className="inline-flex items-center justify-center rounded-lg border border-[#D8CEC2] bg-white/70 text-[#0B0F14] text-sm font-semibold px-6 py-3 hover:bg-white transition-colors"
               >
                 View work
               </Link>

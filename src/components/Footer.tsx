@@ -28,84 +28,103 @@ const contactLinks = [
 
 const Footer = () => {
   return (
-    <footer className="section-dark border-t border-white/5">
-      <div className="max-w-[1200px] mx-auto px-6 py-16">
-        <div className="grid md:grid-cols-3 gap-12">
-          {/* Brand */}
+    <footer className="bg-[#000000] text-[#86868B] pt-20 pb-12 font-sans overflow-hidden">
+      <div className="max-w-[1024px] mx-auto px-6 md:px-8">
+
+        {/* Top brand header */}
+        <div className="mb-16 pb-12 border-b border-white/10">
+          <h2 className="text-3xl md:text-5xl font-semibold tracking-tighter text-[#F5F5F7] mb-4">
+            BinanceXI
+          </h2>
+          <p className="text-sm text-[#86868B] max-w-md leading-relaxed">
+            Building systems, software, and people. <br className="hidden sm:block" />
+            Based in Zimbabwe. Ready for the world.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-16">
+          {/* Links Column 1 */}
           <div>
-            <p className="text-lg font-semibold tracking-tight">BinanceXI</p>
-            <p className="text-xs text-white/40 mt-2 leading-relaxed">
-              Building systems, software, and people.
-              <br />
-              Based in Zimbabwe.
-            </p>
+            <h4 className="text-[#F5F5F7] font-semibold text-[11px] mb-4 tracking-[0.05em] uppercase">Products</h4>
+            <ul className="space-y-3.5 text-xs">
+              <li>
+                <Link to="/portfolio" className="hover:text-white transition-colors duration-300">
+                  Work
+                </Link>
+              </li>
+              <li>
+                <Link to="/downloads" className="hover:text-white transition-colors duration-300">
+                  Downloads
+                </Link>
+              </li>
+              <li>
+                <Link to="/downloads#early-access" className="hover:text-white transition-colors duration-300">
+                  Early Access
+                </Link>
+              </li>
+            </ul>
           </div>
 
-          {/* Navigation */}
-          <div className="flex gap-12 text-xs text-white/50">
-            <div className="flex flex-col gap-3">
-              <Link to="/portfolio" className="hover:text-white transition-colors">
-                Work
-              </Link>
-              <Link to="/downloads" className="hover:text-white transition-colors">
-                Downloads
-              </Link>
-              <Link to="/downloads#early-access" className="hover:text-white transition-colors">
-                Early Access
-              </Link>
-            </div>
-            <div className="flex flex-col gap-3">
-              <Link to="/contact?tab=request-system" className="hover:text-white transition-colors">
-                Request System
-              </Link>
-              <Link to="/contact" className="hover:text-white transition-colors">
-                Contact
-              </Link>
-            </div>
-            <div className="flex flex-col gap-3">
-              <Link to="/privacy" className="hover:text-white transition-colors">
-                Privacy
-              </Link>
-              <Link to="/terms" className="hover:text-white transition-colors">
-                Terms
-              </Link>
-            </div>
+          {/* Links Column 2 */}
+          <div>
+            <h4 className="text-[#F5F5F7] font-semibold text-[11px] mb-4 tracking-[0.05em] uppercase">Connect</h4>
+            <ul className="space-y-3.5 text-xs">
+              <li>
+                <Link to="/contact?tab=request-system" className="hover:text-white transition-colors duration-300">
+                  Request System
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="hover:text-white transition-colors duration-300">
+                  Contact
+                </Link>
+              </li>
+              {contactLinks.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors duration-300"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          {/* Social */}
-          <div className="flex flex-col gap-3 text-xs text-white/50 md:items-end">
-            {contactLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.url}
-                target={link.url.startsWith("http") ? "_blank" : undefined}
-                rel={link.url.startsWith("http") ? "noopener noreferrer" : undefined}
-                className="hover:text-white transition-colors"
-              >
-                {link.label}
-              </a>
-            ))}
-            <div className="h-px w-full md:w-48 bg-white/10 my-1" aria-hidden="true" />
-            {socialLinks.map((link) => (
-              <a
-                key={link.platform}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white transition-colors"
-              >
-                {link.platform}
-              </a>
-            ))}
+          {/* Links Column 3 */}
+          <div>
+            <h4 className="text-[#F5F5F7] font-semibold text-[11px] mb-4 tracking-[0.05em] uppercase">Social</h4>
+            <ul className="space-y-3.5 text-xs">
+              {socialLinks.map((link) => (
+                <li key={link.platform}>
+                  <a
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors duration-300"
+                  >
+                    {link.platform}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
-      </div>
 
-      <div className="border-t border-white/5">
-        <div className="max-w-[1200px] mx-auto px-6 py-6">
-          <p className="text-xs text-white/30">
-            © {new Date().getFullYear()} BinanceXI. All rights reserved.
-          </p>
+        {/* Bottom Section */}
+        <div className="pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-[11px]">
+          <p>Copyright © {new Date().getFullYear()} BinanceXI Inc. All rights reserved.</p>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <Link to="/privacy" className="hover:text-white transition-colors duration-300 border-r border-[#86868B]/40 pr-4">
+              Privacy Policy
+            </Link>
+            <Link to="/terms" className="hover:text-white transition-colors duration-300">
+              Terms of Service
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

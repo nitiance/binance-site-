@@ -28,9 +28,9 @@ const TextReveal = ({
             initial={{ y: "100%" }}
             animate={isInView ? { y: 0 } : { y: "100%" }}
             transition={{
-              duration: 0.6,
-              delay: delay + i * 0.05,
-              ease: [0.25, 0.1, 0.25, 1],
+              duration: 0.65,
+              delay: delay + i * 0.04,
+              ease: [0.16, 1, 0.3, 1],
             }}
           >
             {word}

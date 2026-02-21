@@ -23,7 +23,7 @@ export type SystemRequestLeadPayload = {
   mode: string;
   devicesCount: number;
   branchesCount: number;
-  modules: string[];
+  systemRequired: string;
   timeline: string;
   budgetRange: string;
   pageUrl: string;

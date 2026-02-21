@@ -22,19 +22,9 @@ const projects = [
 
 const labsBuilds = [
   {
-    name: "Inventory + Alerts",
-    status: "In build",
-    description: "Stock tracking, low-stock alerts, and audit-friendly movement logs.",
-  },
-  {
-    name: "Analytics Studio",
-    status: "In build",
-    description: "Profit and reporting views designed for daily decisions, not vanity dashboards.",
-  },
-  {
-    name: "Offline Sync Engine",
-    status: "Prototype",
-    description: "Offline-first operation with safe reconciliation when connectivity returns.",
+    name: "BinanceXI POS",
+    status: "Early Access",
+    description: "Integrated point of sale specifically built for pharmacies, retail, and repair shops in emerging markets.",
   },
 ] as const;
 
@@ -42,18 +32,13 @@ const Portfolio = () => {
   return (
     <div>
       {/* Hero - Gradient Banner */}
-      <GradientBanner 
-        height="h-[50vh] sm:h-[60vh]" 
-        title="Work that speaks for itself."
-        subtitle="Portfolio"
-        showLogo={false}
-      />
+      <GradientBanner height="h-[60vh]" title="Built by Binance Labs." subtitle="Apps, sites, and systems" showLogo={false} />
 
       {/* Systems (Primary) */}
       <section id="systems" className="section-dark scroll-mt-20">
         <div className="max-w-[1200px] mx-auto px-6 py-16 md:py-24">
           <ScrollReveal>
-            <p className="text-xs tracking-tight uppercase mb-6 opacity-50">Systems</p>
+            <p className="text-xs tracking-tight uppercase mb-6 opacity-50">Binance Labs</p>
             <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
               Business System Suite
             </h2>
@@ -68,13 +53,13 @@ const Portfolio = () => {
                 href="https://binacepos.vercel.app/?demo=1"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center justify-center rounded-lg bg-[#F7F3EE] text-[#0B1F3B] text-sm font-semibold px-4 py-2.5 hover:bg-white transition-colors"
+                className="inline-flex items-center justify-center rounded-lg bg-[#F7F3EE] text-[#0B1F3B] text-sm font-semibold px-6 py-3 hover:bg-white transition-colors"
               >
                 Try demo
               </a>
               <Link
                 to="/contact?tab=request-system"
-                className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 text-white text-sm font-semibold px-4 py-2.5 hover:bg-white/10 transition-colors"
+                className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/5 text-white text-sm font-semibold px-6 py-3 hover:bg-white/10 transition-colors"
               >
                 Request system
               </Link>
@@ -114,7 +99,7 @@ const Portfolio = () => {
             </p>
           </ScrollReveal>
 
-          <div className="mt-10 grid md:grid-cols-3 gap-4">
+          <div className="mt-10 grid gap-4 max-w-md">
             {labsBuilds.map((build, i) => (
               <ScrollReveal key={build.name} delay={0.05 * i}>
                 <div className="rounded-xl border border-[#D8CEC2] bg-white/80 p-5 shadow-[0_8px_24px_rgba(11,31,59,0.06)] h-full flex flex-col">
@@ -129,10 +114,10 @@ const Portfolio = () => {
                   </p>
                   <div className="mt-4">
                     <Link
-                      to={`/downloads?product=${encodeURIComponent(build.name)}#early-access`}
+                      to={`/contact?tab=request-system`}
                       className="inline-flex items-center gap-1 text-xs font-semibold text-[#0B1F3B] border-b border-[#0B1F3B]/40 pb-0.5 hover:border-[#0B1F3B] transition-colors"
                     >
-                      Join Early Access <ArrowUpRight className="w-3.5 h-3.5" />
+                      Request System <ArrowUpRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>
                 </div>
@@ -146,15 +131,14 @@ const Portfolio = () => {
       <section className="bg-background">
         <div className="max-w-[1200px] mx-auto px-6 py-16 md:py-24">
           <ScrollReveal>
-            <p className="text-xs tracking-tight uppercase mb-6 opacity-50">Projects</p>
+            <p className="text-xs tracking-tight uppercase mb-6 opacity-50">Binance Labs</p>
           </ScrollReveal>
-          
+
           {projects.map((project, i) => (
             <ScrollReveal key={project.title} delay={0.05 * i}>
               <div className="border-b border-border py-8 md:py-10 grid md:grid-cols-[1fr_2fr_auto] gap-6 md:gap-8 items-start">
                 <div>
                   <p className="text-sm font-bold tracking-tight">{project.title}</p>
-                  <p className="text-xs text-muted-foreground mt-1">{project.type}</p>
                 </div>
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   {project.description}
